@@ -1,103 +1,180 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+// Wine Berry color palette
+const WINE = "#6B1839";
+const BERRY = "#A23E48";
+const SOFT_PINK = "#F8E1E7";
+const GOLD = "#D6B370";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [opened, setOpened] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <motion.div
+      className="flex items-center justify-center min-h-screen w-full transition-colors duration-700"
+      animate={
+        hovered && !opened
+          ? {
+              background: `radial-gradient(circle at 60% 40%, ${SOFT_PINK} 0%, #f3c6d3 60%, ${BERRY} 100%)`,
+            }
+          : { background: WINE }
+      }
+      transition={{ duration: 0.7 }}
+    >
+      <AnimatePresence>
+        {!opened && (
+          <motion.div
+            className="relative w-[340px] h-[220px] flex items-center justify-center select-none"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            animate={
+              hovered
+                ? { scale: 1.04, y: -10, rotateZ: -3, boxShadow: `0 12px 40px 0 ${BERRY}33` }
+                : { scale: 1, y: 0, rotateZ: 0, boxShadow: `0 4px 16px 0 ${WINE}22` }
+            }
+            transition={{ type: "spring", stiffness: 200, damping: 18 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            {/* Animated shadow under envelope */}
+            <motion.div
+              className="absolute left-1/2 top-[200px] -translate-x-1/2 z-0"
+              initial={{ scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
+              animate={opened ? { scaleX: 1.4, scaleY: 0.7, opacity: 0.10, filter: 'blur(4px)' } : { scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
+              transition={{ duration: 0.8, type: 'spring' }}
+              style={{ width: 180, height: 38 }}
+            >
+              <svg width="180" height="38" viewBox="0 0 180 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="90" cy="19" rx="80" ry="15" fill={WINE} fillOpacity="0.18" />
+              </svg>
+            </motion.div>
+            {/* SVG Envelope with animated body lift */}
+            <motion.div
+              className="absolute w-full h-full z-10"
+              initial={{ y: 0 }}
+              animate={opened ? { y: -24 } : { y: 0 }}
+              transition={{ duration: 0.8, type: 'spring' }}
+            >
+              <svg
+                viewBox="0 0 340 220"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-full"
+              >
+                {/* Envelope body */}
+                <rect x="10" y="20" width="320" height="180" rx="10" fill={SOFT_PINK} stroke={WINE} strokeWidth="4" />
+                {/* Envelope outline */}
+                <path
+                  d="M30 60 Q170 180 310 60"
+                  stroke={WINE}
+                  strokeWidth="4"
+                  fill="none"
+                />
+                {/* Flaps */}
+                <path
+                  d="M30 60 L170 140 L310 60"
+                  stroke={WINE}
+                  strokeWidth="3"
+                  fill="none"
+                />
+                <path
+                  d="M30 60 L170 30 L310 60"
+                  stroke={WINE}
+                  strokeWidth="3"
+                  fill={SOFT_PINK}
+                />
+                {/* Wax seal shadow */}
+                <ellipse
+                  cx="170"
+                  cy="140"
+                  rx="22"
+                  ry="8"
+                  fill={BERRY}
+                  opacity="0.18"
+                />
+                {/* Floral accent */}
+                <circle cx="185" cy="120" r="3" fill={GOLD} />
+                <circle cx="192" cy="126" r="2" fill={GOLD} />
+                <path d="M170 140 Q180 120 192 126" stroke={GOLD} strokeWidth="2" fill="none" />
+                {/* Wax seal */}
+                <ellipse
+                  cx="170"
+                  cy="140"
+                  rx="18"
+                  ry="16"
+                  fill={BERRY}
+                  stroke={WINE}
+                  strokeWidth="4"
+                />
+                <text
+                  x="170"
+                  y="146"
+                  textAnchor="middle"
+                  fontSize="18"
+                  fontWeight="bold"
+                  fill="#fff3e3"
+                  style={{ fontFamily: 'serif' }}
+                >
+                  LN
+                </text>
+              </svg>
+            </motion.div>
+            {/* Animated flap (top) */}
+            <motion.svg
+              viewBox="0 0 340 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute w-full h-[80px] top-0 left-0 z-20"
+              style={{ transformOrigin: '170px 60px' }}
+              animate={{ rotateX: opened ? -110 : 0 }}
+              transition={{ duration: 0.8, type: 'spring' }}
+            >
+              <path
+                d="M30 60 L170 30 L310 60 Q170 110 30 60 Z"
+                fill={SOFT_PINK}
+                stroke={WINE}
+                strokeWidth="4"
+              />
+            </motion.svg>
+            {/* Clickable area to open flap */}
+            {!opened && (
+              <button
+                className="absolute inset-0 w-full h-full z-40 cursor-pointer bg-transparent"
+                aria-label="Open Envelope"
+                onClick={() => setOpened(true)}
+              />
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {opened && (
+          <motion.div
+            key="invitation"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.7, type: "spring" }}
+            className="bg-white p-8 max-w-2xl w-full flex flex-col items-center shadow-2xl relative rounded-xl border-4"
+            style={{ borderColor: BERRY }}
+          >
+            <img
+              src="/S__22020099.png"
+              alt="Postcard Invitation"
+              className="rounded-lg shadow-lg mb-6 w-full max-w-[600px] object-contain border-2"
+              style={{ borderColor: BERRY }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <a
+              href="/form"
+              className="mt-4 px-8 py-2 rounded-full text-lg font-semibold shadow hover:scale-105 transition-transform"
+              style={{ background: BERRY, color: SOFT_PINK }}
+            >
+              ยืนยันการเข้าร่วม
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
