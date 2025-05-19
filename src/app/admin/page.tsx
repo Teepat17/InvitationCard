@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 export default function AdminPage() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

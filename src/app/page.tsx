@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 // Wine Berry color palette
 const WINE = "#6B1839";
@@ -159,11 +160,14 @@ export default function Home() {
             className="bg-white p-8 max-w-2xl w-full flex flex-col items-center shadow-2xl relative rounded-xl border-4"
             style={{ borderColor: BERRY }}
           >
-            <img
+            <Image
               src="/S__22020099.png"
               alt="Postcard Invitation"
               className="rounded-lg shadow-lg mb-6 w-full max-w-[600px] object-contain border-2"
               style={{ borderColor: BERRY }}
+              width={600}
+              height={400}
+              priority
             />
             <a
               href="/form"
