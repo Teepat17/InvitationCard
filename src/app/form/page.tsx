@@ -13,7 +13,11 @@ export default function FormPage() {
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+    let checked = false;
+    if (type === "checkbox" && e.target instanceof HTMLInputElement) {
+      checked = e.target.checked;
+    }
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
