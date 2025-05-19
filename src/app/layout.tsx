@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "งานเลี้ยงสุดหรู | Luxury Invitation",
-  description: "เว็บไซต์เชิญร่วมงานเลี้ยงสุดหรูในธีม #441533 พร้อมฟอร์มตอบรับและระบบแอดมิน",
+  title: "MSEP",
+  description: "เว็บไซต์เชิญร่วมงานรับน้อง MSEP 18 พร้อมฟอร์มตอบรับและระบบแอดมิน",
 };
 
 export default function RootLayout({
@@ -24,6 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
+      <head>
+        <title>MSEP</title>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

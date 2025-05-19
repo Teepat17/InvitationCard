@@ -74,22 +74,19 @@ export default function Home() {
             <motion.img
               src="/Rub Nong (172 x 105 mm).svg"
               alt="Letter"
-              className="w-full h-full object-contain rounded-lg shadow-lg border-2"
-              style={{ borderColor: BERRY, backfaceVisibility: 'hidden' }}
-              initial={{ scale: 1, opacity: 1, rotateY: 0, filter: 'brightness(1)' }}
+              className="w-full h-full object-contain rounded-lg shadow-lg"
+              style={{ backfaceVisibility: 'hidden' }}
+              initial={{ scale: 1, opacity: 1, rotateY: 0, filter: 'brightness(1)', rotate: 0 }}
               animate={
                 animating
-                  ? { scale: 1.15, opacity: 1, filter: 'brightness(1.3)', zIndex: 20 }
+                  ? { scale: 5, opacity: 1, filter: 'brightness(5)', zIndex: 50, rotate: 720 }
                   : opened
-                  ? { scale: 0.98, opacity: 0, rotateY: 180, y: 40, filter: 'brightness(1)' }
-                  : { scale: 1, opacity: 1, rotateY: 0, y: 0, filter: 'brightness(1)' }
+                  ? { scale: 0.98, opacity: 0, rotateY: 540, y: 40, filter: 'brightness(1)', rotate: 720 }
+                  : { scale: 1, opacity: 1, rotateY: 0, y: 0, filter: 'brightness(1)', rotate: 0 }
               }
               transition={{ duration: animating ? 0.7 : 0.9, type: 'spring' }}
             />
             {/* Title overlay */}
-            <div className="absolute top-4 left-0 w-full flex justify-center pointer-events-none">
-              <span className="text-3xl sm:text-2xl xs:text-xl font-bold tracking-widest" style={{ color: BERRY, textShadow: '0 2px 8px #fff8' }}>MSEP</span>
-            </div>
             {/* Clickable area to open letter */}
             {!opened && !animating && (
               <button
@@ -109,29 +106,30 @@ export default function Home() {
             animate={{ y: 0, opacity: 1, scale: 1, filter: 'brightness(1)' }}
             exit={{ y: 100, opacity: 0, scale: 0.9, filter: 'brightness(0.8)' }}
             transition={{ duration: 0.7, type: "spring" }}
-            className="bg-white p-4 sm:p-2 max-w-2xl w-full flex flex-col items-center shadow-2xl relative rounded-xl border-4 mx-2"
-            style={{ borderColor: BERRY }}
+            className="bg-white p-4 max-w-md w-full flex flex-col items-center border rounded-lg mx-2"
+            style={{ borderColor: BERRY, borderWidth: 2 }}
           >
             <Image
               src="/S__22020099.png"
               alt="Postcard Invitation"
-              className="rounded-lg shadow-lg mb-6 w-full max-w-[600px] object-contain border-2"
-              style={{ borderColor: BERRY }}
-              width={600}
-              height={400}
+              className="rounded mb-6 w-full max-w-[400px] object-contain border"
+              style={{ borderColor: BERRY, borderWidth: 1 }}
+              width={400}
+              height={280}
               priority
             />
             <a
               href="https://forms.gle/FVo38Pi1AWb2K1yh7"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 px-8 py-2 rounded-full text-lg font-semibold shadow hover:scale-105 transition-transform"
+              className="mt-4 px-8 py-2 rounded-full text-lg font-semibold hover:scale-105 transition-transform"
               style={{ background: BERRY, color: SOFT_PINK }}
             >
               ยืนยันการเข้าร่วม
             </a>
             <button
-              className="mt-2 px-6 py-2 rounded-full border border-luxury text-luxury font-semibold hover:bg-luxury hover:text-white transition-colors"
+              className="mt-2 px-6 py-2 rounded-full border text-luxury font-semibold hover:bg-luxury hover:text-white transition-colors"
+              style={{ borderColor: BERRY, borderWidth: 1 }}
               onClick={handleBack}
             >
               กลับไปยังจดหมาย
