@@ -11,10 +11,30 @@ const SOFT_PINK = "#F8E1E7";
 export default function Home() {
   const [opened, setOpened] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [animating, setAnimating] = useState(false);
+
+  // Responsive width/height
+  const letterWidth = "w-[430px] max-w-full sm:w-[350px] xs:w-[95vw]";
+  const letterHeight = "h-[260px] sm:h-[180px] xs:h-[44vw]";
+
+  // Open letter with animation
+  const handleOpen = () => {
+    setAnimating(true);
+    setTimeout(() => {
+      setAnimating(false);
+      setOpened(true);
+    }, 700); // match animation duration
+  };
+
+  // Back to letter
+  const handleBack = () => {
+    setOpened(false);
+    setTimeout(() => setAnimating(false), 100);
+  };
 
   return (
     <motion.div
-      className="flex items-center justify-center min-h-screen w-full transition-colors duration-700"
+      className="flex items-center justify-center min-h-screen w-full transition-colors duration-700 bg-cover bg-center"
       animate={
         hovered && !opened
           ? {
@@ -27,7 +47,7 @@ export default function Home() {
       <AnimatePresence>
         {!opened && (
           <motion.div
-            className="relative w-[430px] h-[260px] flex items-center justify-center select-none"
+            className={`relative ${letterWidth} ${letterHeight} flex items-center justify-center select-none`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             animate={
@@ -40,32 +60,42 @@ export default function Home() {
           >
             {/* Animated shadow under letter */}
             <motion.div
-              className="absolute left-1/2 top-[230px] -translate-x-1/2 z-0"
+              className="absolute left-1/2 top-[90%] -translate-x-1/2 z-0"
               initial={{ scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
-              animate={opened ? { scaleX: 1.4, scaleY: 0.7, opacity: 0.10, filter: 'blur(4px)' } : { scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
+              animate={opened || animating ? { scaleX: 1.4, scaleY: 0.7, opacity: 0.10, filter: 'blur(4px)' } : { scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
               transition={{ duration: 0.8, type: 'spring' }}
-              style={{ width: 220, height: 48 }}
+              style={{ width: 220, height: 48, maxWidth: '60vw' }}
             >
               <svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="110" cy="24" rx="100" ry="20" fill={WINE} fillOpacity="0.18" />
               </svg>
             </motion.div>
-            {/* SVG Letter as image with page flip */}
+            {/* SVG Letter as image with page flip and open animation */}
             <motion.img
               src="/Rub Nong (172 x 105 mm).svg"
               alt="Letter"
               className="w-full h-full object-contain rounded-lg shadow-lg border-2"
               style={{ borderColor: BERRY, backfaceVisibility: 'hidden' }}
-              initial={{ scale: 1, opacity: 1, rotateY: 0 }}
-              animate={opened ? { scale: 0.98, opacity: 0, rotateY: 180, y: 40 } : { scale: 1, opacity: 1, rotateY: 0, y: 0 }}
-              transition={{ duration: 0.9, type: 'spring' }}
+              initial={{ scale: 1, opacity: 1, rotateY: 0, filter: 'brightness(1)' }}
+              animate={
+                animating
+                  ? { scale: 1.15, opacity: 1, filter: 'brightness(1.3)', zIndex: 20 }
+                  : opened
+                  ? { scale: 0.98, opacity: 0, rotateY: 180, y: 40, filter: 'brightness(1)' }
+                  : { scale: 1, opacity: 1, rotateY: 0, y: 0, filter: 'brightness(1)' }
+              }
+              transition={{ duration: animating ? 0.7 : 0.9, type: 'spring' }}
             />
+            {/* Title overlay */}
+            <div className="absolute top-4 left-0 w-full flex justify-center pointer-events-none">
+              <span className="text-3xl sm:text-2xl xs:text-xl font-bold tracking-widest" style={{ color: BERRY, textShadow: '0 2px 8px #fff8' }}>MSEP</span>
+            </div>
             {/* Clickable area to open letter */}
-            {!opened && (
+            {!opened && !animating && (
               <button
                 className="absolute inset-0 w-full h-full z-40 cursor-pointer bg-transparent"
                 aria-label="Open Letter"
-                onClick={() => setOpened(true)}
+                onClick={handleOpen}
               />
             )}
           </motion.div>
@@ -75,11 +105,11 @@ export default function Home() {
         {opened && (
           <motion.div
             key="invitation"
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
+            initial={{ y: 100, opacity: 0, scale: 0.9, filter: 'brightness(0.8)' }}
+            animate={{ y: 0, opacity: 1, scale: 1, filter: 'brightness(1)' }}
+            exit={{ y: 100, opacity: 0, scale: 0.9, filter: 'brightness(0.8)' }}
             transition={{ duration: 0.7, type: "spring" }}
-            className="bg-white p-8 max-w-2xl w-full flex flex-col items-center shadow-2xl relative rounded-xl border-4"
+            className="bg-white p-4 sm:p-2 max-w-2xl w-full flex flex-col items-center shadow-2xl relative rounded-xl border-4 mx-2"
             style={{ borderColor: BERRY }}
           >
             <Image
@@ -100,6 +130,12 @@ export default function Home() {
             >
               ยืนยันการเข้าร่วม
             </a>
+            <button
+              className="mt-2 px-6 py-2 rounded-full border border-luxury text-luxury font-semibold hover:bg-luxury hover:text-white transition-colors"
+              onClick={handleBack}
+            >
+              กลับไปยังจดหมาย
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
