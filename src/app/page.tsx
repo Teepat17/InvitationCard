@@ -14,8 +14,8 @@ export default function Home() {
   const [animating, setAnimating] = useState(false);
 
   // Responsive width/height
-  const letterWidth = "w-[520px] max-w-full sm:w-[430px] xs:w-[95vw]";
-  const letterHeight = "h-[320px] sm:h-[260px] xs:h-[48vw]";
+  const letterWidth = "w-[430px] max-w-full sm:w-[350px] xs:w-[95vw]";
+  const letterHeight = "h-[260px] sm:h-[180px] xs:h-[44vw]";
 
   // Open letter with animation
   const handleOpen = () => {
@@ -56,7 +56,7 @@ export default function Home() {
                 : { scale: 1, y: 0, rotateZ: 0, boxShadow: `0 4px 16px 0 ${WINE}22` }
             }
             transition={{ type: "spring", stiffness: 200, damping: 18 }}
-            style={{ perspective: 1200, width: '43px', height: '26px', maxWidth: '100vw', maxHeight: '100vw' }}
+            style={{ perspective: 1200 }}
           >
             {/* Animated shadow under letter */}
             <motion.div
@@ -64,10 +64,10 @@ export default function Home() {
               initial={{ scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
               animate={opened || animating ? { scaleX: 1.4, scaleY: 0.7, opacity: 0.10, filter: 'blur(4px)' } : { scaleX: 1, scaleY: 1, opacity: 0.25, filter: 'blur(0.5px)' }}
               transition={{ duration: 0.8, type: 'spring' }}
-              style={{ width: 110, height: 4.8, maxWidth: '60vw' }}
+              style={{ width: 220, height: 48, maxWidth: '60vw' }}
             >
-              <svg width="22" height="4.8" viewBox="0 0 22 4.8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="11" cy="2.4" rx="10" ry="2" fill={WINE} fillOpacity="0.18" />
+              <svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="110" cy="24" rx="100" ry="20" fill={WINE} fillOpacity="0.18" />
               </svg>
             </motion.div>
             {/* SVG Letter as image with page flip and open animation */}
@@ -79,7 +79,7 @@ export default function Home() {
               initial={{ scale: 1, opacity: 1, rotateY: 0, filter: 'brightness(1)', rotate: 0 }}
               animate={
                 animating
-                  ? { scale: 2, opacity: 1, filter: 'brightness(5)', zIndex: 50, rotate: 720 }
+                  ? { scale: 5, opacity: 1, filter: 'brightness(5)', zIndex: 50, rotate: 720 }
                   : opened
                   ? { scale: 0.98, opacity: 0, rotateY: 540, y: 40, filter: 'brightness(1)', rotate: 720 }
                   : { scale: 1, opacity: 1, rotateY: 0, y: 0, filter: 'brightness(1)', rotate: 0 }

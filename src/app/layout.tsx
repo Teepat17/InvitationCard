@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MSEP",
-  description: "เว็บไซต์เชิญร่วมงานรับน้อง MSEP 18 พร้อมฟอร์มตอบรับและระบบแอดมิน",
+  description: "ไม่มีไรคนสร้างว่างเลยอยากทำเล่นๆ อิอิ ขอให้พี่ๆน้องๆมากันเยอะๆนะ",
 };
 
 export default function RootLayout({
