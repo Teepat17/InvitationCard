@@ -237,8 +237,8 @@ export default function Home() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="text-4xl sm:text-7xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#fffbe6] to-[#FFD700] drop-shadow-lg mb-4"
-              style={{ letterSpacing: '0.2em', wordBreak: 'break-word' }}
+              className="text-xl sm:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#fffbe6] to-[#FFD700] drop-shadow-lg mb-4"
+              style={{ letterSpacing: '0.1em', wordBreak: 'break-word' }}
             >
               Congratulations!
             </motion.div>
